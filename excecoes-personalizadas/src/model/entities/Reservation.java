@@ -43,9 +43,21 @@ public class Reservation {
 		
 	}
 	
-	public void updateDates(Date checkin, Date checkout){
-		this.checkin 	= checkin;
-		this.checkout 	= checkout;
+	public String updateDates(Date checkIn, Date checkOut){
+		
+		Date now = new Date();
+		
+		if(checkIn.before(now) || checkOut.before(now)) {
+			return "Error in reservation: Reservation dates for update must be future dates";
+		}
+		
+		if(!checkOut.after(checkIn)) {
+			return "Error in reservation: Check-out date must be after check-in date";
+		}
+		this.checkin 	= checkIn;
+		this.checkout 	= checkOut;
+		
+		return null;
 	}
 	
 	@Override //sempre usar quando for utilizar o toString
